@@ -13,7 +13,8 @@ void get_op(run_data *data)
 		, {"pint", pint}, {"pop", pop}
 		, {"swap", swap}, {"add", add}
 		, {"sub", sub}, {"div", _div}
-		, {"mul", mul},  {"mod", mod}
+		, {"mul", mul}, {"mod", mod}
+		, {"pchar", pchar}
 		, {NULL, NULL}
 		};
 	int i;
