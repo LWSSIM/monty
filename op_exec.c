@@ -12,7 +12,7 @@ void get_op(run_data *data)
 		{"push", push}, {"pall", pall}
 		, {"pint", pint}, {"pop", pop}
 		, {"swap", swap}, {"add", add}
-		, {"sub", sub}
+		, {"sub", sub}, {"div", _div}
 		, {NULL, NULL}
 		};
 	int i;
