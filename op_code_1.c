@@ -9,7 +9,7 @@ void push(run_data *data)
 {
 	int n;
 
-	if (data->w_count < 2 || !check_int(data->parsed[1]))
+	if (!data->parsed[1] || !check_int(data->parsed[1]))
 	{
 		fprintf(stderr, "L%u: usage: push integer\n", data->linen);
 		free_data(data), free_stack(data->head), fclose(data->f);
@@ -40,25 +40,19 @@ void pall(run_data *data)
 }
 
 /**
- * check_int - check if str is int
- * @str: str to check
- * Return: 0 || 1
- */
-int check_int(char *str)
+ * pint - print top of the stack value
+ * @data: DS
+ *
+*/
+void pint(run_data *data)
 {
-	int i, flag = 0;
+	stack_t *p = data->head;
 
-	if (str[0] == '-' || str[0] == '+')
+	if (!p)
 	{
-		flag = 1;
-		str++;
+		fprintf(stderr, "L%u: can't pint, stack empty\n", data->linen);
+		free_data(data), free_stack(data->head), fclose(data->f);
+		exit(EXIT_FAILURE);
 	}
-	for (i = 0; i < (int)strlen(str); i++)
-	{
-		if (!isdigit(str[i]))
-			return (0);
-	}
-	if (flag == 1 && i == 0)
-		return (0);
-	return (1);
+	printf("%i\n", p->n);
 }

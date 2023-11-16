@@ -32,13 +32,11 @@ typedef struct stack_s
  * @linen: line number from file (start 1)
  * @head: ptr->stack (DLL)
  * @stack_counter: stack
- * @w_count: words count
  */
 typedef struct run_data
 {
 	char *line;
-	int w_count;
-	char **parsed;
+	char *parsed[2];
 	unsigned int stack_counter;
 	stack_t *head;
 	unsigned int linen;
@@ -69,9 +67,9 @@ int routine(run_data *data);
 
 /*----input_parse----*/
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
-char **get_token(char *input, const char *delimiter, int *w_count);
 int check_space(char *str, ssize_t chars_read);
 int _isspace(char c);
+int check_int(char *str);
 
 /*----op_exec.c----*/
 void get_op(run_data *data);
@@ -80,7 +78,7 @@ int interpreter(run_data *data);
 /*----op_code_1.c----*/
 void push(run_data *data);
 void pall(run_data *data);
-int check_int(char *str);
+void pint(run_data *data);
 
 /*----dll.c----*/
 stack_t *add_dnodeint(stack_t **head, const int n);
@@ -88,7 +86,6 @@ stack_t *add_dnodeint_end(stack_t **head, const int n);
 
 /*----mem_mngmt.c----*/
 void free_data(run_data *data);
-void free_arr(run_data *data);
 void free_stack(stack_t *head);
 
 #endif /*monty.h*/

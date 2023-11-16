@@ -10,13 +10,13 @@ void get_op(run_data *data)
 {
 	instruction_t op[] = {
 		{"push", push}, {"pall", pall}
-		, {NULL, NULL}
+		, {"pint", pint}, {NULL, NULL}
 		};
 	int i;
 
 	for (i = 0; op[i].opcode; i++)
 	{
-		if (!strcmp(op[i].opcode, *data->parsed))
+		if (!strcmp(op[i].opcode, data->parsed[0]))
 		{
 			op[i].f(data);
 			return;
@@ -37,7 +37,10 @@ void get_op(run_data *data)
 */
 int interpreter(run_data *data)
 {
-
+	data->parsed[0] = strtok(data->line, " \n\t");
+	if (data->parsed[0] && data->parsed[0][0] == '#')
+		return (0);
+	data->parsed[1] = strtok(NULL, " \n\t");
 	get_op(data);
 
 	return (0);

@@ -8,10 +8,10 @@
 void init_data(run_data *data)
 {
 	data->stack_counter = 0;
-	data->w_count = 0;
 	data->head = NULL;
 	data->line = NULL;
-	data->parsed = NULL;
+	data->parsed[0] = NULL;
+	data->parsed[1] = NULL;
 	data->linen = 0;
 }
 /**
@@ -38,7 +38,6 @@ int routine(run_data *data)
 		}
 		if (chars_read > 0 && check_space(data->line, chars_read))
 		{
-			data->parsed = get_token(data->line, " /n/t", &data->w_count);
 
 			stat = interpreter(data);
 			free_data(data);
