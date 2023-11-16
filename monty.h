@@ -84,6 +84,7 @@ void swap(run_data *data);
 
 /*----op_code_math.c----*/
 void add(run_data *data);
+void sub(run_data *data);
 
 
 /*----dll.c----*/
