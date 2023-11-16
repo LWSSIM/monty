@@ -75,6 +75,6 @@ void rotr(run_data *data)
 			n = p->n;
 		}
 		add_dnodeint(&data->head, n);
-		delete_dnodeint_at_index(&data->head, data->stack_counter--);
+		delete_dnodeint_at_index(&data->head, data->stack_counter);
 	}
 }
