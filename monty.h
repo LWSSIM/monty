@@ -31,6 +31,7 @@ typedef struct stack_s
  * @f: opened file
  * @linen: line number from file (start 1)
  * @head: ptr->stack (DLL)
+ * @q: q/stack switch
  * @stack_counter: stack
  */
 typedef struct run_data
@@ -38,6 +39,7 @@ typedef struct run_data
 	char *line;
 	char *parsed[2];
 	unsigned int stack_counter;
+	int q;
 	stack_t *head;
 	unsigned int linen;
 	FILE *f;
@@ -74,6 +76,8 @@ int check_int(char *str);
 /*----op_exec.c----*/
 void get_op(run_data *data);
 int interpreter(run_data *data);
+void queue(run_data *data);
+void stack(run_data *data);
 
 /*----op_code_1.c----*/
 void push(run_data *data);

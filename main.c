@@ -7,6 +7,7 @@
  */
 void init_data(run_data *data)
 {
+	data->q = 0;
 	data->stack_counter = 0;
 	data->head = NULL;
 	data->line = NULL;

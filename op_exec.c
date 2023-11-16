@@ -16,6 +16,7 @@ void get_op(run_data *data)
 		, {"mul", mul}, {"mod", mod}
 		, {"pchar", pchar}, {"pstr", pstr}
 		, {"rotl", rotl}, {"rotr", rotr}
+		, {"stack", stack}, {"queue", queue}
 		, {NULL, NULL}
 		};
 	int i;
@@ -52,4 +53,24 @@ int interpreter(run_data *data)
 	get_op(data);
 
 	return (0);
+}
+
+/**
+ * stack - switch to stack mode
+ * @data: DS
+ *
+*/
+void stack(run_data *data)
+{
+	data->q = 0;
+}
+
+/**
+ * queue - switch to queue mode
+ * @data: DS
+ *
+*/
+void queue(run_data *data)
+{
+	data->q = 1;
 }

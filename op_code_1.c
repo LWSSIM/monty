@@ -16,7 +16,8 @@ void push(run_data *data)
 		exit(EXIT_FAILURE);
 	}
 	n = atoi(data->parsed[1]);
-	if (!add_dnodeint(&data->head, n))
+	if (!(!data->q ? add_dnodeint(&data->head, n) :
+	add_dnodeint_end(&data->head, n)))
 	{
 		free_data(data), free_stack(data->head), fclose(data->f);
 		exit(EXIT_FAILURE);
