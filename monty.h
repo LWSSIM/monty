@@ -80,6 +80,7 @@ void push(run_data *data);
 void pall(run_data *data);
 void pop(run_data *data);
 void pint(run_data *data);
+void swap(run_data *data);
 
 /*----dll.c----*/
 stack_t *add_dnodeint(stack_t **head, const int n);

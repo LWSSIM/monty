@@ -38,7 +38,6 @@ int routine(run_data *data)
 		}
 		if (chars_read > 0 && check_space(data->line, chars_read))
 		{
-
 			stat = interpreter(data);
 			free_data(data);
 		}

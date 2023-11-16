@@ -70,4 +70,25 @@ void pop(run_data *data)
 		free_data(data), free_stack(data->head), fclose(data->f);
 		exit(EXIT_FAILURE);
 	}
+	data->stack_counter--;
+}
+
+/**
+ * swap - swaps 2 top elements of a stack
+ * @data: DS
+ *
+*/
+void swap(run_data *data)
+{
+	int tmp;
+
+	if (data->stack_counter < 2)
+	{
+		fprintf(stderr, "L%u: can't swap, stack too short\n", data->linen);
+		free_data(data), free_stack(data->head), fclose(data->f);
+		exit(EXIT_FAILURE);
+	}
+	tmp = data->head->n;
+	data->head->n = data->head->next->n;
+	data->head->next->n = tmp;
 }
