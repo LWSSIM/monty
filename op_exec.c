@@ -10,7 +10,8 @@ void get_op(run_data *data)
 {
 	instruction_t op[] = {
 		{"push", push}, {"pall", pall}
-		, {"pint", pint}, {NULL, NULL}
+		, {"pint", pint}, {"pop", pop}
+		, {NULL, NULL}
 		};
 	int i;
 

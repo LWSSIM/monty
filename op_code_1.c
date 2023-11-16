@@ -56,3 +56,18 @@ void pint(run_data *data)
 	}
 	printf("%i\n", p->n);
 }
+
+/**
+ * pop - remove 1st stack element
+ * @data: DS
+ *
+*/
+void pop(run_data *data)
+{
+	if (delete_dnodeint_at_index(&data->head, 0) == -1)
+	{
+		fprintf(stderr, "L%u: can't pop an empty stack\n", data->linen);
+		free_data(data), free_stack(data->head), fclose(data->f);
+		exit(EXIT_FAILURE);
+	}
+}

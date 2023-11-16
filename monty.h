@@ -78,10 +78,12 @@ int interpreter(run_data *data);
 /*----op_code_1.c----*/
 void push(run_data *data);
 void pall(run_data *data);
+void pop(run_data *data);
 void pint(run_data *data);
 
 /*----dll.c----*/
 stack_t *add_dnodeint(stack_t **head, const int n);
+int delete_dnodeint_at_index(stack_t **head, unsigned int index);
 stack_t *add_dnodeint_end(stack_t **head, const int n);
 
 /*----mem_mngmt.c----*/
