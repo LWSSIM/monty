@@ -9,8 +9,7 @@ void push(run_data *data)
 {
 	int n;
 
-	
-	if (data->w_count != 2 || !check_int(data->parsed[1]))
+	if (data->w_count < 2 || !check_int(data->parsed[1]))
 	{
 		fprintf(stderr, "L%u: usage: push integer\n", data->linen);
 		free_data(data), free_stack(data->head), fclose(data->f);

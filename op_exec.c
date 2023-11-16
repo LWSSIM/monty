@@ -23,7 +23,8 @@ void get_op(run_data *data)
 		}
 	}
 
-	fprintf(stderr, "L%u: unknown instruction %s\n", data->linen, data->parsed[0]);
+	fprintf(stderr, "L%u: unknown instruction %s\n", data->linen,
+	data->parsed[0]);
 	free_data(data), free_stack(data->head), fclose(data->f);
 	exit(EXIT_FAILURE);
 }

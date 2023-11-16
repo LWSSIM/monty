@@ -88,17 +88,16 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 */
 char **get_token(char *input, const char *delimiter, int *w_count)
 {
-	int index = 0, count = 0;
-	char *copy = _strdup(input), *token = NULL, *last_token;
+	int index = 0, count = 0, trailing_spaces;
+
+	char *copy = _strdup(input), *token = NULL, *nl;
+
 	char **words = NULL;
-	char *nl;
 
 	count = 0;
 	if (copy == NULL)
-	{
-		fprintf(stderr, "Error: malloc failed");
-		exit(EXIT_FAILURE);
-	}
+		fprintf(stderr, "Error: malloc failed"), exit(EXIT_FAILURE);
+
 	token = strtok(copy, delimiter);
 	while (token != NULL)
 	{
@@ -107,24 +106,26 @@ char **get_token(char *input, const char *delimiter, int *w_count)
 	}
 	*w_count = count;
 	free(copy);
-
 	words = (char **)malloc((sizeof(char *) * count));
 	if (words == NULL)
-	{
-		fprintf(stderr, "Error: malloc failed");
-		exit(EXIT_FAILURE);
-	}
-	copy = _strdup(input);
-	token = strtok(copy, delimiter);
+		fprintf(stderr, "Error: malloc failed"), exit(EXIT_FAILURE);
+
+	copy = _strdup(input), token = strtok(copy, delimiter);
 	for (index = 0; index < count; index++)
 	{
-		words[index] = _strdup(token);
-		token = strtok(NULL, delimiter);
+		while (*token == ' ')
+			token++;
+		words[index] = _strdup(token), token = strtok(NULL, delimiter);
+		nl = strchr(words[index], '\n');
+		if (nl)
+			*nl = '\0';
 	}
-	last_token = words[count - 1];
-	nl = strchr(last_token, '\n');
-	if (nl)
-		*nl = '\0', w_count--;
+	if (count > 0)
+	{
+		trailing_spaces = strspn(words[count - 1], " \t\r\f\v");
+		if (trailing_spaces == (int)strlen(words[count - 1]))
+			(*w_count)--, free(words[count - 1]);
+	}
 	free(copy);
 	return (words); /*free when called*/
 }
