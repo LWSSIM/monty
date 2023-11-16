@@ -15,7 +15,7 @@ void get_op(run_data *data)
 		, {"sub", sub}, {"div", _div}
 		, {"mul", mul}, {"mod", mod}
 		, {"pchar", pchar}, {"pstr", pstr}
-		, {"rotl", rotl}
+		, {"rotl", rotl}, {"rotr", rotr}
 		, {NULL, NULL}
 		};
 	int i;

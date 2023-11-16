@@ -9,7 +9,6 @@ void free_data(run_data *data)
 	if (data->line)
 		free(data->line);
 	data->line = NULL;
-
 }
 
 /**

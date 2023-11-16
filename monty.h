@@ -93,6 +93,7 @@ void mod(run_data *data);
 void pchar(run_data *data);
 void pstr(run_data *data);
 void rotl(run_data *data);
+void rotr(run_data *data);
 
 
 

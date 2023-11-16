@@ -57,3 +57,24 @@ void rotl(run_data *data)
 		delete_dnodeint_at_index(&data->head, 0);
 	}
 }
+
+/**
+ * rotr - rotate 1st node to last
+ * @data: DS
+ *
+*/
+void rotr(run_data *data)
+{
+	stack_t *p = data->head;
+	int n;
+
+	if (data->stack_counter > 1)
+	{
+		for (; p; p = p->next)
+		{
+			n = p->n;
+		}
+		add_dnodeint(&data->head, n);
+		delete_dnodeint_at_index(&data->head, data->stack_counter--);
+	}
+}
