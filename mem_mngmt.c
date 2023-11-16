@@ -6,37 +6,31 @@
  */
 void free_data(run_data *data)
 {
-	if (data->f)
-		fclose(data->f);
-
 	if (data->line)
 		free(data->line);
-
-	if (data->head)
-		free_stack(data->head);
+	data->line = NULL;
 
 	if (data->parsed)
-		free_arr(data->parsed);
+		free_arr(data);
 }
 /**
  * free_arr - free array of strs
- * @arr: ptr the the array
+ * @data: ptr the the array
  *
  */
-void free_arr(char **arr)
+void free_arr(run_data *data)
 {
 	int i;
 
-	if (arr)
+	if (!data->parsed)
+		return;
+	for (i = 0; i < data->w_count; i++)
 	{
-		while (arr[i])
-		{
-			free(arr[i]);
-			i++;
-		}
-		free(arr);
+		free(data->parsed[i]);
+		data->parsed[i] = NULL;
 	}
-	arr = NULL;
+	free(data->parsed);
+	data->parsed = NULL;
 }
 /**
  * free_stack - frees a stack_t list.
@@ -55,4 +49,5 @@ void free_stack(stack_t *head)
 		free(head);
 		head = p;
 	}
+	head = NULL;
 }

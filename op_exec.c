@@ -2,23 +2,30 @@
 
 /**
 * get_op - fetch upcode function
-* @cmd: read command
+* @data: read command
 *
 * Return: ptr to command function || int
 */
-int (*get_op(char *cmd))(run_data *)
+void get_op(run_data *data)
 {
 	instruction_t op[] = {
-		{"push", push}, {"pall", pall}};
-	int i = 0;
+		{"push", push}, {"pall", pall}
+		, {NULL, NULL}
+		};
+	int i;
 
-	while (op[i].opcode)
+	for (i = 0; op[i].opcode; i++)
 	{
-		if (!strcmp(op[i].opcode, cmd))
-			return (op[i].f);
+		if (!strcmp(op[i].opcode, *data->parsed))
+		{
+			op[i].f(data);
+			return;
+		}
 	}
 
-	return (0);
+	fprintf(stderr, "L%u: unknown instruction %s\n", data->linen, data->parsed[0]);
+	free_data(data), free_stack(data->head), fclose(data->f);
+	exit(EXIT_FAILURE);
 }
 
 /**
@@ -29,13 +36,8 @@ int (*get_op(char *cmd))(run_data *)
 */
 int interpreter(run_data *data)
 {
-	int stat;
 
-	stat = get_op(data->parsed[0])(data);
-	if (stat == 0)
-	{
-		fprintf(stderr, "L%u: unknown instruction %s", data->line_n, data->parsed[0]);
-		return (-1);
-	}
-	return (stat);
+	get_op(data);
+
+	return (0);
 }

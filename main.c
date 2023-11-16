@@ -1,17 +1,18 @@
 #include "monty.h"
 
 /**
- * _init - initialize structure
+ * init_data - initialize structure
  * @data: data struct
  *
  */
-void _init(run_data *data)
+void init_data(run_data *data)
 {
-	stack_counter = 0;
+	data->stack_counter = 0;
+	data->w_count = 0;
 	data->head = NULL;
 	data->line = NULL;
 	data->parsed = NULL;
-	data->line_n = 1;
+	data->linen = 0;
 }
 /**
  * routine - RPEL from file
@@ -23,27 +24,28 @@ int routine(run_data *data)
 {
 	ssize_t chars_read;
 	size_t num;
-	int stat;
+	int stat = 0;
 
-	_init(data);
+	init_data(data);
 	do	{
-		chars_read = _getline(&data->line, num, data->f);
+		chars_read = _getline(&data->line, &num, data->f);
+		data->linen++;
 		if (chars_read == EOF || stat == -1)
 		{
-			free_data(data);
+			fclose(data->f);
+			free_data(data), free_stack(data->head);
 			return (stat);
 		}
-		data->parsed = get_token(data->line, " /n/t");
-		stat = interpreter(data);
-		if (stat == -1)
+		if (chars_read > 0 && check_space(data->line, chars_read))
 		{
+			data->parsed = get_token(data->line, " /n/t", &data->w_count);
+
+			stat = interpreter(data);
 			free_data(data);
-			exit(EXIT_FAILURE);
 		}
-		free(data->line), free_arr(data->parsed);
-		data->line_n++;
 
 	} while (chars_read != EOF);
+	return  (stat);
 }
 
 /**
@@ -61,16 +63,16 @@ int main(int ac, char **av)
 
 	if (ac != 2)
 	{
-		fprintf(stderr, "USAGE: monty file");
+		fprintf(stderr, "USAGE: monty file\n");
 		exit(EXIT_FAILURE);
 	}
-	data.f = fopen(av[1], 'r');
-	if (data.f != 0)
+	data.f = fopen(av[1], "r");
+	if (!data.f)
 	{
-		fprintf(stderr, "Error: Can't open file %s", av[1]);
+		fprintf(stderr, "Error: Can't open file %s\n", av[1]);
 		exit(EXIT_FAILURE);
 	}
 	st = routine(&data);
 
-	return (0);
+	return (st);
 }

@@ -1,15 +1,45 @@
 #include "monty.h"
 
 /**
- * _getline - read line from stream
- * @lineptr: ptr->line
- * @n: lenght
- * @stream: file strem
- * Description:
- * -stores address of bfr to *lineptr
- * -*lineptr and *n are updated on success
- * Return: nmbr of chars read || -1 on fail
- */
+* _strdup - duplicate str to new allocated memory space
+* @str: pointer to input string
+* Return: pointer to new memory space && NULL if str = null
+*/
+char *_strdup(char *str)
+{
+	char *p;
+
+	int i, size;
+
+	if (str == 0)
+		return (0);
+
+	size = 0;
+	while (str[size] != '\0')
+		size++;
+
+	p = malloc(sizeof(char) * (size + 1));
+	if (p == 0)
+		return (0);
+
+	for (i = 0; i < size; i++)
+	{
+		p[i] = str[i];
+	}
+	p[size] = '\0';
+	return (p);
+}
+
+/**
+* _getline - read line from stream
+* @lineptr: ptr->line
+* @n: lenght
+* @stream: file strem
+* Description:
+* -stores address of bfr to *lineptr
+* -*lineptr and *n are updated on success
+* Return: nmbr of chars read || -1 on fail
+*/
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 {
 	size_t bfrsz = 257;
@@ -49,46 +79,89 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 }
 
 /**
- * get_token - splits string into words using (strtok)
- * @input: passed input line
- * @delimiter: passed delilimiter
- * Return: array of words
- */
-char **get_token(char *input, const char *delimiter)
+* get_token - splits string into words using (strtok)
+* @input: passed input line
+* @delimiter: passed delilimiter
+* @w_count: word count
+*
+* Return: array of words
+*/
+char **get_token(char *input, const char *delimiter, int *w_count)
 {
-	unsigned int w_count = 0, index = 0;
-	char *copy = strdup(input), *token = NULL;
+	int index = 0, count = 0;
+	char *copy = _strdup(input), *token = NULL, *last_token;
 	char **words = NULL;
+	char *nl;
 
+	count = 0;
 	if (copy == NULL)
 	{
 		fprintf(stderr, "Error: malloc failed");
+		exit(EXIT_FAILURE);
 	}
-	token = strtok(copy, delimiter);
-	while (token)
-	{
-		w_count++;
-		token = strtok(NULL, delimiter);
-	}
-	w_count++; /*for NULL*/
-	free(copy);
-
-	words = malloc(((sizeof(char *) * w_count) + 1));
-	if (words == NULL)
-	{
-		fprintf(stderr, "Error: malloc failed");
-	}
-	copy = strdup(input);
 	token = strtok(copy, delimiter);
 	while (token != NULL)
 	{
-		words[index] = malloc((sizeof(char) * (strlen(token))) + 1);
-		strcpy(words[index], token);
+		count++;
 		token = strtok(NULL, delimiter);
-		index++;
 	}
-	words[index] = NULL;
+	*w_count = count;
+	free(copy);
 
+	words = (char **)malloc((sizeof(char *) * count));
+	if (words == NULL)
+	{
+		fprintf(stderr, "Error: malloc failed");
+		exit(EXIT_FAILURE);
+	}
+	copy = _strdup(input);
+	token = strtok(copy, delimiter);
+	for (index = 0; index < count; index++)
+	{
+		words[index] = _strdup(token);
+		token = strtok(NULL, delimiter);
+	}
+	last_token = words[count - 1];
+	nl = strchr(last_token, '\n');
+	if (nl)
+		*nl = '\0', w_count--;
 	free(copy);
 	return (words); /*free when called*/
+}
+
+/**
+* check_space - check for non_white spcae
+* @str: input
+* @chars_read: nbr of chars
+* Return: i
+*/
+int check_space(char *str, ssize_t chars_read)
+{
+	int i = 0;
+
+	ssize_t j;
+
+	for (j = 0; j < chars_read; j++)
+	{
+		if (!_isspace(str[j]))
+		{
+			i = 1;
+			break;
+		}
+	}
+	return (i);
+}
+/**
+* _isspace - check if char is space
+* @c: input
+* Return: bool
+*/
+int _isspace(char c)
+{
+	return (c == ' ' ||
+			c == '\t' ||
+			c == '\n' ||
+			c == '\r' ||
+			c == '\v' ||
+			c == '\f');
 }
