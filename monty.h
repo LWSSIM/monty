@@ -86,6 +86,7 @@ void swap(run_data *data);
 void add(run_data *data);
 void sub(run_data *data);
 void _div(run_data *data);
+void mul(run_data *data);
 
 
 /*----dll.c----*/
