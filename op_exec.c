@@ -42,6 +42,8 @@ int interpreter(run_data *data)
 	data->parsed[0] = strtok(data->line, " \n\t");
 	if (data->parsed[0] && data->parsed[0][0] == '#')
 		return (0);
+	if (!strcmp(data->parsed[0], "nop"))
+		return (0);
 	data->parsed[1] = strtok(NULL, " \n\t");
 	get_op(data);
 
