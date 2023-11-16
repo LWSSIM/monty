@@ -82,6 +82,10 @@ void pop(run_data *data);
 void pint(run_data *data);
 void swap(run_data *data);
 
+/*----op_code_math.c----*/
+void add(run_data *data);
+
+
 /*----dll.c----*/
 stack_t *add_dnodeint(stack_t **head, const int n);
 int delete_dnodeint_at_index(stack_t **head, unsigned int index);

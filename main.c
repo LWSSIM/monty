@@ -41,7 +41,6 @@ int routine(run_data *data)
 			stat = interpreter(data);
 			free_data(data);
 		}
-
 	} while (chars_read != EOF);
 	return  (stat);
 }
