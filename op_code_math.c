@@ -41,12 +41,15 @@ void sub(run_data *data)
 */
 void _div(run_data *data)
 {
-	if (data->stack_counter < 2 || !data->head->n)
+	if (data->stack_counter < 2)
 	{
-		if (data->stack_counter < 2)
-			fprintf(stderr, "L%u: can't div, stack too short\n", data->linen);
-		if (!data->head->n)
-			fprintf(stderr, "L%u: division by zero\n", data->linen);
+		fprintf(stderr, "L%u: can't div, stack too short\n", data->linen);
+		free_data(data), free_stack(data->head), fclose(data->f);
+		exit(EXIT_FAILURE);
+	}
+	if (!data->head->n)
+	{
+		fprintf(stderr, "L%u: division by zero\n", data->linen);
 		free_data(data), free_stack(data->head), fclose(data->f);
 		exit(EXIT_FAILURE);
 	}
