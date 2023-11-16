@@ -51,6 +51,9 @@ void pstr(run_data *data)
 */
 void rotl(run_data *data)
 {
-	add_dnodeint_end(&data->head, data->head->n);
-	delete_dnodeint_at_index(&data->head, 0);
+	if (data->stack_counter > 1)
+	{
+		add_dnodeint_end(&data->head, data->head->n);
+		delete_dnodeint_at_index(&data->head, 0);
+	}
 }
