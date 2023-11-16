@@ -43,3 +43,14 @@ void pstr(run_data *data)
 	}
 	printf("\n");
 }
+
+/**
+ * rotl - rotate 1st node to last
+ * @data: DS
+ *
+*/
+void rotl(run_data *data)
+{
+	add_dnodeint_end(&data->head, data->head->n);
+	delete_dnodeint_at_index(&data->head, 0);
+}

@@ -92,6 +92,7 @@ void mod(run_data *data);
 /*----op_code_util.c----*/
 void pchar(run_data *data);
 void pstr(run_data *data);
+void rotl(run_data *data);
 
 
 
