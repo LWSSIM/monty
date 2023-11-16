@@ -14,7 +14,7 @@ void get_op(run_data *data)
 		, {"swap", swap}, {"add", add}
 		, {"sub", sub}, {"div", _div}
 		, {"mul", mul}, {"mod", mod}
-		, {"pchar", pchar}
+		, {"pchar", pchar}, {"pstr", pstr}
 		, {NULL, NULL}
 		};
 	int i;

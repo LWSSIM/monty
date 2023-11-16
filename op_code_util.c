@@ -21,3 +21,25 @@ void pchar(run_data *data)
 	}
 	printf("%c\n", data->head->n);
 }
+
+/**
+ * pstr - prints string
+ * @data: DS
+ *
+*/
+void pstr(run_data *data)
+{
+	stack_t *p = data->head;
+
+	while (p)
+	{
+		if (!p->n || !isalpha(p->n))
+		{
+			printf("\n");
+			return;
+		}
+		printf("%c", p->n);
+		p = p->next;
+	}
+	printf("\n");
+}
