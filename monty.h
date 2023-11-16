@@ -87,6 +87,7 @@ void add(run_data *data);
 void sub(run_data *data);
 void _div(run_data *data);
 void mul(run_data *data);
+void mod(run_data *data);
 
 
 /*----dll.c----*/
