@@ -66,15 +66,15 @@ void rotl(run_data *data)
 void rotr(run_data *data)
 {
 	stack_t *p = data->head;
-	int n;
+	int n, i = 0;
 
 	if (data->stack_counter > 1)
 	{
 		for (; p; p = p->next)
 		{
-			n = p->n;
+			n = p->n, i++;
 		}
 		add_dnodeint(&data->head, n);
-		delete_dnodeint_at_index(&data->head, data->stack_counter);
+		delete_dnodeint_at_index(&data->head, i);
 	}
 }
